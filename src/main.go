@@ -15,7 +15,7 @@ func main() {
 
 	orders := api.GetLastOrders(0)
 	for _, order := range orders {
-		if len(order.ShippingAddress.HouseNumber) != 0 {
+		if order.ShippingAddress.HasHouseNumber() {
 			continue
 		}
 

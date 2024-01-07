@@ -1,5 +1,7 @@
 package billbee
 
+import "strings"
+
 type OrdersResponse struct {
 	Data []Order
 }
@@ -16,4 +18,8 @@ type Address struct {
 	Street       string `json:"Street"`
 	HouseNumber  string `json:"HouseNumber"`
 	Line2        string `json:"Line2"`
+}
+
+func (address Address) HasHouseNumber() bool {
+	return len(strings.Trim(address.HouseNumber, " ")) != 0
 }
