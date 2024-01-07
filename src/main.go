@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/lippoliv/billbee-house-number-assistant/billbee"
 	"os"
+	"time"
 )
 
 func main() {
@@ -19,13 +20,22 @@ func main() {
 			continue
 		}
 
-		fixedAddress := order.ShippingAddress.FixHouseNumber()
 		fmt.Printf(
-			"Order %d was missing house number, street is '%s', line2 is '%s', housenumber is '%s'\n",
+			"Order %d, Address %d missing housenumber\n",
 			order.Id,
-			fixedAddress.Street,
-			fixedAddress.Line2,
-			fixedAddress.HouseNumber,
+			order.ShippingAddress.Id,
 		)
+
+		fixedAddress := order.ShippingAddress.FixHouseNumber()
+		api.UpdateAddress(fixedAddress)
+
+		fmt.Printf(
+			"Order %d, Address %d was fixed\n",
+			order.Id,
+			fixedAddress.Id,
+		)
+
+		// API rate limit
+		time.Sleep(1 * time.Second)
 	}
 }

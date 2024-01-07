@@ -21,6 +21,12 @@ type Address struct {
 	Line2       string `json:"Line2"`
 }
 
+type AddressPatch struct {
+	Street      string `json:"Street"`
+	HouseNumber string `json:"HouseNumber"`
+	Line2       string `json:"AddressAddition"`
+}
+
 func (address Address) HasHouseNumber() bool {
 	return len(strings.Trim(address.HouseNumber, " ")) != 0
 }
@@ -44,4 +50,12 @@ func (address Address) FixHouseNumber() Address {
 	}
 
 	return address
+}
+
+func (address Address) toPatch() AddressPatch {
+	return AddressPatch{
+		Street:      address.Street,
+		HouseNumber: address.HouseNumber,
+		Line2:       address.Line2,
+	}
 }

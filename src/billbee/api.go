@@ -1,6 +1,7 @@
 package billbee
 
 import (
+	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -24,11 +25,35 @@ func NewApiClient(user string, password string, apiKey string) ApiClient {
 }
 
 func (api ApiClient) get(url string) string {
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		panic("request failed (1)")
 	}
 
+	api.authenticateRequest(req)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic("request failed (2)")
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		panic("request failed (3)")
+	}
+
+	return string(body)
+}
+
+func (api ApiClient) patch(url string, data []byte) string {
+	req, err := http.NewRequest(http.MethodPatch, url, bytes.NewBuffer(data))
+	if err != nil {
+		panic("request failed (1)")
+	}
+
+	req.Header.Set("Content-Type", "application/json")
 	api.authenticateRequest(req)
 
 	client := &http.Client{}
@@ -63,7 +88,6 @@ func (api ApiClient) GetLastOrders(minOrderId int) []Order {
 		currentTime.Day(),
 		minOrderId,
 	)
-	fmt.Println(url)
 	err := json.Unmarshal(
 		[]byte(
 			api.get(
@@ -77,4 +101,21 @@ func (api ApiClient) GetLastOrders(minOrderId int) []Order {
 	}
 
 	return response.Data
+}
+
+func (api ApiClient) UpdateAddress(address Address) {
+	patch := address.toPatch()
+
+	data, err := json.Marshal(patch)
+	if err != nil {
+		panic("couldn't update address")
+	}
+
+	api.patch(
+		fmt.Sprintf(
+			"https://app.billbee.io/api/v1/customers/addresses/%d",
+			address.Id,
+		),
+		data,
+	)
 }

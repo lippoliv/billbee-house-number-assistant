@@ -156,3 +156,60 @@ func TestAddress_FixHouseNumber(t *testing.T) {
 		)
 	}
 }
+
+func TestAddress_toPatch(t *testing.T) {
+	data := []struct {
+		address  Address
+		expected AddressPatch
+	}{
+		{
+			address: Address{
+				Street:      "Str",
+				HouseNumber: "1a",
+			},
+			expected: AddressPatch{
+				Street:      "Str",
+				HouseNumber: "1a",
+			},
+		},
+		{
+			address: Address{
+				Street:      "Str",
+				HouseNumber: "1a",
+				Line2:       "2",
+			},
+			expected: AddressPatch{
+				Street:      "Str",
+				HouseNumber: "1a",
+				Line2:       "2",
+			},
+		},
+		{
+			address: Address{
+				Street:      "Str",
+				HouseNumber: "1a",
+				Line2:       "",
+			},
+			expected: AddressPatch{
+				Street:      "Str",
+				HouseNumber: "1a",
+				Line2:       "",
+			},
+		},
+	}
+
+	for i, test := range data {
+		// Given
+
+		// When
+		patch := test.address.toPatch()
+
+		// Then
+		assert.Equal(
+			t,
+			test.expected,
+			patch,
+			fmt.Sprintf("#%d failed", i),
+		)
+	}
+}
