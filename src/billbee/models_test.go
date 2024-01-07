@@ -55,3 +55,104 @@ func TestAddress_HasHouseNumber(t *testing.T) {
 		)
 	}
 }
+
+func TestAddress_FixHouseNumber(t *testing.T) {
+	data := []struct {
+		address  Address
+		expected Address
+	}{
+		{
+			address: Address{
+				Street: "Str 1a",
+			},
+			expected: Address{
+				Street:      "Str",
+				HouseNumber: "1a",
+			},
+		},
+		{
+			address: Address{
+				Street: "Str 1",
+			},
+			expected: Address{
+				Street:      "Str",
+				HouseNumber: "1",
+			},
+		},
+		{
+			address: Address{
+				Street: "Str1a",
+			},
+			expected: Address{
+				Street:      "Str",
+				HouseNumber: "1a",
+			},
+		},
+		{
+			address: Address{
+				Street: "Str1",
+			},
+			expected: Address{
+				Street:      "Str",
+				HouseNumber: "1",
+			},
+		},
+		{
+			address: Address{
+				Street: "Str",
+				Line2:  "1a",
+			},
+			expected: Address{
+				Street:      "Str",
+				HouseNumber: "1a",
+			},
+		},
+		{
+			address: Address{
+				Street: "Str",
+				Line2:  "1",
+			},
+			expected: Address{
+				Street:      "Str",
+				HouseNumber: "1",
+			},
+		},
+		{
+			address: Address{
+				Street: "Str 1",
+				Line2:  "2",
+			},
+			expected: Address{
+				Street:      "Str",
+				HouseNumber: "1",
+				Line2:       "2",
+			},
+		},
+		{
+			address: Address{
+				Street: "Str 1a",
+				Line2:  "2b",
+			},
+			expected: Address{
+				Street:      "Str",
+				HouseNumber: "1a",
+				Line2:       "2b",
+			},
+		},
+	}
+
+	for i, test := range data {
+		// Given
+
+		// When
+		test.address = test.address.FixHouseNumber()
+
+		// Then
+		assert.Equal(
+			t,
+			test.expected,
+			test.address,
+			fmt.Sprintf("#%d failed", i),
+		)
+	}
+}

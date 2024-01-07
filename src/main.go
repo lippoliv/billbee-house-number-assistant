@@ -19,11 +19,13 @@ func main() {
 			continue
 		}
 
+		fixedAddress := order.ShippingAddress.FixHouseNumber()
 		fmt.Printf(
-			"Order %d missing house number, street is '%s', line2 is '%s'\n",
+			"Order %d was missing house number, street is '%s', line2 is '%s', housenumber is '%s'\n",
 			order.Id,
-			order.ShippingAddress.Street,
-			order.ShippingAddress.Line2,
+			fixedAddress.Street,
+			fixedAddress.Line2,
+			fixedAddress.HouseNumber,
 		)
 	}
 }
