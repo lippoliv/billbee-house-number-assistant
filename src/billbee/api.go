@@ -77,7 +77,7 @@ func (api ApiClient) authenticateRequest(req *http.Request) {
 	req.Header.Add("X-Billbee-Api-Key", api.apiKey)
 }
 
-func (api ApiClient) GetLastOrders(minOrderId int) []Order {
+func (api ApiClient) GetLastOrders(minOrderId int64) []Order {
 	currentTime := time.Now().Add(1 * 24 * time.Hour * -1)
 
 	response := &OrdersResponse{}
