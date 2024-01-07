@@ -27,7 +27,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: src
-        run: go get .
+        run: go get -v .
 
       - name: Test with the Go CLI
         working-directory: src
