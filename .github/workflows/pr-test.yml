@@ -21,4 +21,3 @@ jobs:
         with:
           task_types: '["build", "ci", "docs", "feat", "fix", "perf", "refactor", "style", "test", "chore"]'
           add_label: 'true'
-  π
