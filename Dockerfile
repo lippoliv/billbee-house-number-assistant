@@ -19,6 +19,10 @@ ENV BILLBEE_USER=""
 ENV BILLBEE_PASSWORD=""
 ENV BILLBEE_API_KEY=""
 
+# Ensure up to date root certificates, SSL verification will fail without it
+COPY --from=build-env /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
+# "Install" our binary
 COPY --from=build-env /app/assistant /
 
 ENTRYPOINT ["/assistant"]
