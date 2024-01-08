@@ -3,7 +3,7 @@ name: Go test
 on:
   push:
     paths:
-      - .github/workflows/test.yml
+      - .github/workflows/go-test.yml
       - src/**
 
 jobs:
