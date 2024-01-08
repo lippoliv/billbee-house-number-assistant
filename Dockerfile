@@ -7,5 +7,6 @@ ENV BILLBEE_PASSWORD=""
 ENV BILLBEE_API_KEY=""
 
 COPY src/assistant /assistant
+RUN chmod +x /assistant
 
 CMD /assistant
