@@ -1,9 +1,13 @@
 name: Go test
 
 on:
+  pull_request:
+    branches:
+      - main
+
   push:
     paths:
-      - .github/workflows/test.yml
+      - .github/workflows/go-test.yml
       - src/**
 
 jobs:
