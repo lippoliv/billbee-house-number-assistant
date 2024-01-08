@@ -12,15 +12,6 @@ jobs:
   build-container:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        platform:
-          - linux/386
-          - linux/amd64
-          - linux/arm/v6
-          - linux/arm/v7
-          - linux/arm64
     steps:
       - name: Check out the repo
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # 4.1.1
@@ -49,7 +40,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56 # 5.1.0
         with:
-          platforms: ${{ matrix.platform }}
+          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
           context: .
           file: ./Dockerfile
           push: true
