@@ -1,4 +1,4 @@
-FROM golang:1.21.5-alpine
+FROM debian:12.4-slim
 
 MAINTAINER Oliver Lippert <oliver@lipperts-web.de>
 
