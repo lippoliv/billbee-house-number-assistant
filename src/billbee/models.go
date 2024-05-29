@@ -32,8 +32,17 @@ func (address Address) HasHouseNumber() bool {
 }
 
 func (address Address) FixHouseNumber() Address {
-	// House number is in street text
-	re := regexp.MustCompile(`(\D*?)(\d+.*?)$`)
+	// House number is at the start of street text
+	re := regexp.MustCompile(`^ *(\d+\S+)(\D*?)$`)
+	for _, match := range re.FindAllStringSubmatch(address.Street, -1) {
+		address.Street = strings.Trim(match[2], " ")
+		address.HouseNumber = match[1]
+
+		return address
+	}
+
+	// House number is at the end of street text
+	re = regexp.MustCompile(`(\D*?)(\d+.*?)$`)
 	for _, match := range re.FindAllStringSubmatch(address.Street, -1) {
 		address.Street = strings.Trim(match[1], " ")
 		address.HouseNumber = match[2]
