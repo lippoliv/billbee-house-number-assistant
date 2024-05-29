@@ -139,6 +139,42 @@ func TestAddress_FixHouseNumber(t *testing.T) {
 				Line2:       "2b",
 			},
 		},
+		{
+			address: Address{
+				Street: "21 Str",
+			},
+			expected: Address{
+				Street:      "Str",
+				HouseNumber: "21",
+			},
+		},
+		{
+			address: Address{
+				Street: "21 Some Str",
+			},
+			expected: Address{
+				Street:      "Some Str",
+				HouseNumber: "21",
+			},
+		},
+		{
+			address: Address{
+				Street: "21a Str",
+			},
+			expected: Address{
+				Street:      "Str",
+				HouseNumber: "21a",
+			},
+		},
+		{
+			address: Address{
+				Street: "21a Some Str",
+			},
+			expected: Address{
+				Street:      "Some Str",
+				HouseNumber: "21a",
+			},
+		},
 	}
 
 	for i, test := range data {
