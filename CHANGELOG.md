@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/lippoliv/billbee-house-number-assistant/compare/v1.0.0...v1.1.0) (2024-05-29)
+
+
+### Features
+
+* find house numbers at the start of the street text ([#33](https://github.com/lippoliv/billbee-house-number-assistant/issues/33)) ([d835381](https://github.com/lippoliv/billbee-house-number-assistant/commit/d835381c024e1f43689135616dc508fd7aca664a))
+
 ## 1.0.0 (2024-01-08)
 
 
