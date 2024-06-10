@@ -1,5 +1,5 @@
 # Build binary
-FROM --platform=$BUILDPLATFORM golang:1.22.3-alpine AS build-env
+FROM --platform=$BUILDPLATFORM golang:1.22.4-alpine AS build-env
 
 ARG TARGETOS
 ARG TARGETARCH
